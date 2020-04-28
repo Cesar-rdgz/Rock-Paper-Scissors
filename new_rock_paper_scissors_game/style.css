@@ -1,0 +1,77 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+}
+
+button > p {
+    color: transparent;
+}
+
+button#rock {
+    margin: 0 20px;
+    padding: 30px 80px;
+    background-color: transparent;
+    background-image: url(rock-576668_640.png) !important;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+    transition: all 0.5s;
+}
+
+button#paper {
+    margin: 0 20px;
+    padding: 80px 50px;
+	background-color: transparent;
+    background-image: url(black-1294234_640.png) !important;
+    background-size: cover;
+    border: none;
+    transition: all 0.5s;
+}
+
+button#scissors {
+    margin: 0 20px;
+    padding: 40px 70px;
+    background-color: transparent;
+    background-image: url(scissors-303776_640.png) !important;
+    background-size: cover;
+    border: none;
+    transition: all 0.5s;
+}
+
+button:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+    transition: all 0.5s;
+}
+
+.scores {
+	position: absolute;
+	top: 0;
+	display: flex;
+	justify-content: center;
+}
+
+.scores .output1, .output2 {
+	margin: 10px 15px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.player_score, .computer_score {
+	margin: 10px 0px;
+}
+
+.placeholder {
+	margin-bottom: 30px;
+}
