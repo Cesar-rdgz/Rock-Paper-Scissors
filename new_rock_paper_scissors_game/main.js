@@ -1,56 +1,79 @@
-let playerScore = document.querySelector('.player_score');
-let computerScore = document.querySelector('.computer_score');
-let phrase = document.querySelector('.phrase');
-let counterPlayer = 0;
-let counterComputer = 0;
+let userScore = 0;
+let computerScore = 0;
+const userScoreSpan = document.getElementById('user-score');
+const computerScoreSpan = document.getElementById('computer-score');
+const scoreBoardDiv = document.querySelector('.score-board');
+const resultP = document.querySelector('.result > p');
+const rockDiv = document.getElementById('r');
+const paperDiv = document.getElementById('p');
+const scissorDiv = document.getElementById('s');
 
-function computerPlay() {
-    let moves = ["rock", "paper", "scissors"];
-
-    function randomMoves() {
-        return moves[Math.floor(Math.random() * moves.length)];
-    } 
-    
-    return randomMoves();
+function getComputerChoice() {
+	const choices = ['r', 'p', 's'];
+	const randomNumber = Math.floor(Math.random() * 3);
+	return choices[randomNumber];
 }
 
-document.body.addEventListener("click", e => {
-	e.preventDefault();
-	switch (true) {
-		case e.target.id === computerPlay():
-			phrase.innerHTML = "";
-            phrase.appendChild(document.createTextNode('tie'));
-            break;
-        case e.target.id === "rock" && computerPlay() === "scissors":
-        case e.target.id === "paper" && computerPlay() === "rock":
-        case e.target.id === "scissors" && computerPlay() === "paper":
-			phrase.innerHTML = "";
-            phrase.appendChild(document.createTextNode('You Win!'));
-			counterPlayer++;
-			playerScore.innerHTML = "";
-			playerScore.appendChild(document.createTextNode(counterPlayer));
-            break;
-        case e.target.id === "rock" && computerPlay() === "paper":
-        case e.target.id === "paper" && computerPlay() === "scissors":
-        case e.target.id === "scissors" && computerPlay() === "rock":
-            phrase.innerHTML = "";
-            phrase.appendChild(document.createTextNode('You Lose!'));
-			counterComputer++;
-			computerScore.innerHTML = "";
-			computerScore.appendChild(document.createTextNode(counterComputer));
-            break; 
+function convertToWord(letter) {
+	if(letter === 'r') return 'rock';
+	if(letter === 'p') return 'paper';
+	return 'scissors'
+}
+
+function win(user, computer){
+	userScore++;
+	userScoreSpan.textContent = userScore;
+	computerScoreSpan.textContent = computerScore;
+	resultP.textContent = `${convertToWord(user)} beats ${convertToWord(computer)} you win`;
+}
+
+function lose(user, computer){
+	computerScore++;
+	userScoreSpan.textContent = userScore;
+	computerScoreSpan.textContent = computerScore;
+	resultP.textContent = `${convertToWord(computer)} beats ${convertToWord(user)} you loses`;
+}
+
+function draw(user, computer){
+	userScoreSpan.textContent = userScore;
+	computerScoreSpan.textContent = computerScore;
+	resultP.textContent = `${convertToWord(user)} and ${convertToWord(computer)} are the same, it's a draw.`;
+}
+
+function game(userChoice){
+	const computerChoice = getComputerChoice();
+	switch(userChoice + computerChoice){
+		case "pr":
+		case "rs":
+		case "sp":
+			win(userChoice, computerChoice);
+			break;
+		case "rp":
+		case "ps":
+		case "sr":
+			lose(userChoice, computerChoice);
+			break;
+		case "pp":
+		case "rr":
+		case "ss":
+			draw(userChoice, computerChoice);
+			break;
 	}
-	
-	e.currentTime = 0;
-	
-	if (counterPlayer >= 5 || counterComputer >= 5 && counterPlayer > counterComputer) {
-		phrase.innerHTML = "";
-		phrase.appendChild(document.createTextNode('you win! you beat the computer'));
-		setTimeout( () => {location.reload()}, 3000);
-		counterComputer.innerHTML = counterComputer;
-	}else if (counterPlayer >= 5 || counterComputer >= 5 && counterPlayer < counterComputer) {
-		phrase.innerHTML = "";
-		phrase.appendChild(document.createTextNode('you lose! try harder next time'));
-		setTimeout( () => {location.reload()}, 3000);
-	}
-});
+}
+
+function main() {
+	rockDiv.addEventListener('click', () => {
+		game('r');
+	});
+
+	paperDiv.addEventListener('click', () => {
+		game('p');
+	});
+
+	scissorDiv.addEventListener('click', () => {
+		game('s');
+	});
+}
+
+
+main();
